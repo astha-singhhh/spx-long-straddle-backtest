@@ -1,10 +1,15 @@
 import pandas as pd
 
+'''
+date: SPX/VIX file
+S: SPX close
+iv: VIX close 
+r: 1-month treasury yield 
+q: SPY dividend yield proxy
+'''
 COLUMNS = ["date", "S", "iv", "r", "q"]
 
-
 def check_inputs(df):
-    """Raise ValueError listing every problem found in the input table."""
     problems = []
     if list(df.columns) != COLUMNS:
         problems.append(f"columns must be {COLUMNS}")
@@ -26,7 +31,6 @@ def check_inputs(df):
         problems.append("gap of more than 7 calendar days")
     if problems:
         raise ValueError("; ".join(problems))
-
 
 def load_inputs(path):
     df = pd.read_csv(path, parse_dates=["date"]).sort_values("date")
